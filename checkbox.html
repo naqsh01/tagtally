@@ -1,0 +1,121 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet"/>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script>
+$(function () {
+    $('.button-checkbox').each(function () {
+
+        // Settings
+        var $widget = $(this),
+            $button = $widget.find('button'),
+            $checkbox = $widget.find('input:checkbox'),
+            color = $button.data('color'),
+            settings = {
+                on: {
+                    icon: 'glyphicon glyphicon-check'
+                },
+                off: {
+                    icon: 'glyphicon glyphicon-unchecked'
+                }
+            };
+
+        // Event Handlers
+        $button.on('click', function () {
+            $checkbox.prop('checked', !$checkbox.is(':checked'));
+            $checkbox.triggerHandler('change');
+            updateDisplay();
+        });
+        $checkbox.on('change', function () {
+            updateDisplay();
+        });
+
+        // Actions
+        function updateDisplay() {
+            var isChecked = $checkbox.is(':checked');
+
+            // Set the button's state
+            $button.data('state', (isChecked) ? "on" : "off");
+
+            // Set the button's icon
+            $button.find('.state-icon')
+                .removeClass()
+                .addClass('state-icon ' + settings[$button.data('state')].icon);
+
+            // Update the button's color
+            if (isChecked) {
+                $button
+                    .removeClass('btn-default')
+                    .addClass('btn-' + color + ' active');
+            }
+            else {
+                $button
+                    .removeClass('btn-' + color + ' active')
+                    .addClass('btn-default');
+            }
+        }
+
+        // Initialization
+        function init() {
+
+            updateDisplay();
+
+            // Inject the icon if applicable
+            if ($button.find('.state-icon').length === 0) {
+                $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i> ');
+            }
+        }
+        init();
+    });
+});
+
+
+
+
+
+var     new_checkbox_button = function(name,id){
+            return "<li><span class='button-checkbox'><button type='button' class='btn btn-sm btn-primary active' data-color='primary'><i class='state-icon glyphicon glyphicon-check'></i>&nbsp;"+name+"</button><input type='checkbox' class='hidden' checked=''></span></li>";
+        };
+
+$("#add").click(function(){
+       $("#selected_targets").append(new_checkbox_button("lallalala","1111"));
+});
+</script>
+
+<p> Existing checkboxes</p>
+
+    <span class="button-checkbox">
+        <button type="button" class="btn" data-color="default">Default</button>
+        <input type="checkbox" class="hidden" checked />
+    </span>
+    <span class="button-checkbox">
+        <button type="button" class="btn" data-color="primary">Primary</button>
+        <input type="checkbox" class="hidden" checked />
+    </span>
+    <span class="button-checkbox">
+        <button type="button" class="btn" data-color="success">Success</button>
+        <input type="checkbox" class="hidden" checked />
+    </span>
+    <span class="button-checkbox">
+        <button type="button" class="btn" data-color="info">Info</button>
+        <input type="checkbox" class="hidden" checked />
+    </span>
+    <span class="button-checkbox">
+        <button type="button" class="btn" data-color="warning">Warning</button>
+        <input type="checkbox" class="hidden" checked />
+    </span>
+    <span class="button-checkbox">
+        <button type="button" class="btn" data-color="danger">Danger</button>
+        <input type="checkbox" class="hidden" checked />
+    </span>
+    <span class="button-checkbox">
+        <button type="button" class="btn" data-color="link">Link</button>
+        <input type="checkbox" class="hidden" checked />
+    </span>
+<br/><br/><br/>
+<p> New checkboxes</p>
+<button id="add">click to add checkbox</button>
+<ui id="selected_targets"></ui>
